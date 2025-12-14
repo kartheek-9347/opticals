@@ -1,17 +1,72 @@
 <!-- This is main configuration File -->
 <style>
 /* Mobile full header - hidden on larger screens, visible on small screens */
+/* Mobile full header - CENTER LOGIN */
 .mobile-full-header{display:none}
 @media only screen and (max-width:991px){
-    .mobile-full-header{display:block;background:#000;color:#fff;padding:8px 15px;}
-    .mobile-full-header .mobile-top-links{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
-    .mobile-full-header .mobile-top-links li{color:#fff;font-size:13px;}
-    .mobile-full-header .mobile-top-links li:first-child{flex:0 1 auto;margin-right:auto;}
-    .mobile-full-header .mobile-top-links li:nth-child(2){flex:0 1 auto;margin-right:0;}
-    .mobile-full-header .mobile-top-links li:nth-child(n+3){flex:0 1 auto;margin-top:8px;margin-left:auto;margin-right:auto;}
-    .mobile-full-header ul li a{color:#fff;text-decoration:none;}
+    .mobile-full-header{display:block;background:#000;color:#fff;padding:12px 15px;}
+    .mobile-full-header .mobile-top-links{
+        list-style:none;padding:0;margin:0;
+        display:flex;flex-wrap:wrap;
+        align-items:center;
+        justify-content:center;  /* ← THIS CENTERS IT */
+        gap:15px;
+    }
+    .mobile-full-header .mobile-top-links li{color:#fff;font-size:14px;font-weight:500;}
+    .mobile-full-header ul li a{
+        color:#fff;text-decoration:none;
+        padding:8px 16px;border-radius:20px;
+        background:#ff6600;color:#fff !important;
+        display:inline-flex;align-items:center;gap:5px;
+    }
+    .mobile-full-header ul li a:hover{background:#e55a00;}
     .top{display:none !important;}
 }
+/* DASHBOARD LEFT + CART RIGHT - ONE ROW ON MOBILE */
+@media only screen and (max-width: 991px) {
+    /* Hide ONLY login */
+    .header .right ul li:nth-child(1) {
+        display: none !important;
+    }
+    
+    /* PERFECT LEFT-RIGHT LAYOUT */
+    .header .right {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    
+    .header .right ul {
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        gap: 20px !important;
+        margin: 0 !important;
+        padding: 10px 0 !important;
+    }
+    
+    /* Dashboard LEFT */
+    .header .right ul li:nth-child(2) {
+        display: block !important;
+        order: 1 !important;
+        margin-right: auto !important;
+    }
+    
+    /* Cart RIGHT */
+    .header .right ul li:last-child {
+        display: block !important;
+        order: 2 !important;
+        margin-left: auto !important;
+    }
+    
+    .header .right ul li a {
+        font-size: 14px !important;
+        white-space: nowrap !important;
+        padding: 8px 12px !important;
+    }
+}
+
 
 /* PERFECT MOBILE NAVIGATION - Black BG + White Text */
 @media only screen and (max-width: 991px) {
@@ -366,30 +421,36 @@ foreach ($result as $row) {
         </div>
     </div>
 </div>
-
 <!-- Mobile full header: show full header items on small screens -->
-<!-- <div class="mobile-full-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <ul class="mobile-top-links">
-                    <li><i class="fa fa-phone"></i> <?php echo $contact_phone; ?></li>
-                    <li><i class="fa fa-envelope-o"></i> <?php echo $contact_email; ?></li>
-                    <?php
-                    $statement = $pdo->prepare("SELECT * FROM tbl_social");
-                    $statement->execute();
-                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($result as $row) {
-                        if($row['social_url'] != ''): ?>
-                            <li><a href="<?php echo $row['social_url']; ?>"><i class="<?php echo $row['social_icon']; ?>"></i></a></li>
-                        <?php endif; 
-                    }
-                    ?>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div class="mobile-full-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<ul class="mobile-top-links">
+					
+<?php
+if(isset($_SESSION['customer'])) {
+    ?>
+    <li><i class="fa fa-user"></i> <?php echo LANG_VALUE_13; ?> <?php echo $_SESSION['customer']['cust_name']; ?></li>
+    <?php
+} else {
+    ?>
+    <li><a href="login.php"><i class="fa fa-sign-in"></i> <?php echo LANG_VALUE_9; ?></a></li>
+    <li><a href="registration.php"><i class="fa fa-user-plus"></i> <?php echo LANG_VALUE_15; ?></a></li>
+    <?php    
+}
+?>
+
+				</ul>
+			</div>
+			<div class="col-xs-12 text-center">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
 
 <div class="header">
     <div class="container">
@@ -519,3 +580,9 @@ foreach ($result as $row) {
         </div>
     </div>
 </div>
+
+
+
+
+
+
